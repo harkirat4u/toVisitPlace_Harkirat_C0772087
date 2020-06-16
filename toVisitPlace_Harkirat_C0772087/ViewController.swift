@@ -15,9 +15,8 @@ class ViewController: UIViewController,MKMapViewDelegate{
     @IBOutlet var PinDrop: UITapGestureRecognizer!
     @IBOutlet weak var mapView: MKMapView!
     let locationManager  = CLLocationManager()
-     let annotation = MKPointAnnotation()
-     let destinationRequest = MKDirections.Request()
-     let geoCoder = CLGeocoder()
+    let annotation = MKPointAnnotation()
+    let destinationRequest = MKDirections.Request()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -66,29 +65,20 @@ class ViewController: UIViewController,MKMapViewDelegate{
          mapView.addAnnotation(annotation)
          self.mapView.addAnnotation(annotation)
         print(newCoordinates) //latitude value or longitude value
-        
-        
-        
         let locationData = ["lat": annotation.coordinate.latitude, "long": annotation.coordinate.longitude,"name":"locationName"] as [String : Any]
         UserDefaults.standard.set(locationData, forKey: "pinned_annotation")
         UserDefaults.standard.synchronize()
         
-        
- 
-        
-        
     }
     //MARK: - callout accessory control tapped
        func mapView(_ mapView: MKMapView, annotationView view: MKAnnotationView, calloutAccessoryControlTapped control: UIControl) {
-        
-                    let storyboard = UIStoryboard(name: "Main", bundle: nil)
-                           let detailVc = storyboard.instantiateViewController(withIdentifier: "Detail") as! DetailViewController
-                    detailVc.lat=self.annotation.coordinate.latitude
-                    detailVc.long=self.annotation.coordinate.longitude
-//                    detailVc.name = pm.country
-                           self.navigationController?.pushViewController(detailVc, animated: true)
-
-               }
+    let alertController = UIAlertController(title: "Success", message: "Added to Favourite list", preferredStyle: .alert)
+    let cancelAction = UIAlertAction(title: "OK", style: .cancel, handler: {(alert: UIAlertAction!) in  Brain.addLocation(place: Places(key: String(self.destinationLocation.latitude) + ":" +             String(self.destinationLocation.longitude) , latitude: String(self.destinationLocation.latitude), longitude: String(self.destinationLocation.longitude)))})
+       alertController.addAction(cancelAction)
+       present(alertController, animated: true, completion: nil)
+    
+    
+    }
         
         
         
