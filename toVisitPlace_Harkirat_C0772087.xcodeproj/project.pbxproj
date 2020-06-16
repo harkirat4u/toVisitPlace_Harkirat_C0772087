@@ -14,6 +14,8 @@
 		286C913F2497207A00EED647 /* toVisitPlace_Harkirat_C0772087.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 286C913D2497207A00EED647 /* toVisitPlace_Harkirat_C0772087.xcdatamodeld */; };
 		286C91412497207E00EED647 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 286C91402497207E00EED647 /* Assets.xcassets */; };
 		286C91442497207E00EED647 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 286C91422497207E00EED647 /* LaunchScreen.storyboard */; };
+		286C914E2497C9D300EED647 /* FirstPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 286C914D2497C9D300EED647 /* FirstPage.swift */; };
+		286C91502498316400EED647 /* DetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 286C914F2498316400EED647 /* DetailViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -26,6 +28,8 @@
 		286C91402497207E00EED647 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		286C91432497207E00EED647 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		286C91452497207E00EED647 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		286C914D2497C9D300EED647 /* FirstPage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirstPage.swift; sourceTree = "<group>"; };
+		286C914F2498316400EED647 /* DetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -62,6 +66,8 @@
 				286C91362497207A00EED647 /* SceneDelegate.swift */,
 				286C91382497207A00EED647 /* ViewController.swift */,
 				286C913A2497207A00EED647 /* Main.storyboard */,
+				286C914F2498316400EED647 /* DetailViewController.swift */,
+				286C914D2497C9D300EED647 /* FirstPage.swift */,
 				286C91402497207E00EED647 /* Assets.xcassets */,
 				286C91422497207E00EED647 /* LaunchScreen.storyboard */,
 				286C91452497207E00EED647 /* Info.plist */,
@@ -142,7 +148,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				286C913F2497207A00EED647 /* toVisitPlace_Harkirat_C0772087.xcdatamodeld in Sources */,
+				286C914E2497C9D300EED647 /* FirstPage.swift in Sources */,
 				286C91392497207A00EED647 /* ViewController.swift in Sources */,
+				286C91502498316400EED647 /* DetailViewController.swift in Sources */,
 				286C91352497207A00EED647 /* AppDelegate.swift in Sources */,
 				286C91372497207A00EED647 /* SceneDelegate.swift in Sources */,
 			);
@@ -289,6 +297,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = FU66UNYT8C;
 				INFOPLIST_FILE = toVisitPlace_Harkirat_C0772087/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -306,6 +315,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = FU66UNYT8C;
 				INFOPLIST_FILE = toVisitPlace_Harkirat_C0772087/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
