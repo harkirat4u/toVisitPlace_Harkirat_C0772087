@@ -25,14 +25,14 @@ class TableMapView: UIViewController, MKMapViewDelegate {
         super.viewDidLoad()
         editMap.delegate = self
 
-        self.navigationItem.title = "Edit your location"
+        self.navigationItem.title = "your location"
         
         let backButton = UIBarButtonItem()
         backButton.title = "Back"
         self.navigationController?.navigationBar.topItem?.backBarButtonItem = backButton
                
         
-        self.editedPlace = defaults.integer(forKey: "edit")
+       
                 
         self.editMap.addAnnotation(dragablePin())
         let latDelta: CLLocationDegrees = 0.05
@@ -104,20 +104,6 @@ class TableMapView: UIViewController, MKMapViewDelegate {
             }
         }
         
-        func editLocation() {
-            let filePath = getDataFilePath()
-
-            var saveString = ""
-            for place in self.editPlaces!{
-               saveString = "\(saveString)\(place.placeLat),\(place.placeLong),\(place.placeName),\(place.city),\(place.country),\(place.postalCode)\n"
-                do{
-               try saveString.write(toFile: filePath, atomically: true, encoding: .utf8)
-                }
-                catch{
-                    print(error)
-                }
-            }
-        }
     
    }
 
@@ -127,7 +113,6 @@ extension TableMapView{
         
   
         let pinAnnotation = MKMarkerAnnotationView(annotation: annotation, reuseIdentifier: "marker")
-                pinAnnotation.markerTintColor = .systemPink
                 pinAnnotation.glyphTintColor = .white
                 pinAnnotation.isDraggable = true
                 pinAnnotation.canShowCallout = true
@@ -135,58 +120,6 @@ extension TableMapView{
                 return pinAnnotation
     
     }
-    func mapView(_ mapView: MKMapView, annotationView view: MKAnnotationView, calloutAccessoryControlTapped control: UIControl) {
-            let alertController = UIAlertController(title: "Add to Favourites", message:
-                "Are you sure to change this location?", preferredStyle: .actionSheet)
-           alertController.addAction(UIAlertAction(title: "Yes", style:  .default, handler: { (UIAlertAction) in
-               
-            CLGeocoder().reverseGeocodeLocation(CLLocation(latitude: mapView.annotations[0].coordinate.latitude, longitude: mapView.annotations[0].coordinate.longitude)) {  placemark, error in
-                       if let error = error as? CLError {
-                           print("CLError:", error)
-                           return
-                        }
-                       else if let placemark = placemark?[0] {
-                        
-                        var placeName = ""
-                        var neighbourhood = ""
-                        var city = ""
-                        var state = ""
-                        var postalCode = ""
-                        var country = ""
-                       if let name = placemark.name {
-                            placeName += name
-                                    }
-                        if let sublocality = placemark.subLocality {
-                            neighbourhood += sublocality
-                                    }
-                        if let locality = placemark.subLocality {
-                             city += locality
-                                    }
-                        if let area = placemark.administrativeArea {
-                                      state += area
-                                  }
-                        if let code = placemark.postalCode {
-                                      postalCode += code
-                                  }
-                        if let cntry = placemark.country {
-                                                country += cntry
-                                            }
-                        let place = mplaces(placeLat:  mapView.annotations[0].coordinate.latitude, placeLong: mapView.annotations[0].coordinate.longitude, placeName: placeName, city: city, postalCode: postalCode, country: country)
-                        self.editPlaces?.remove(at: self.editedPlace)
-                        self.editPlaces?.append(place)
-                        
-                        self.editLocation()
-
-                        self.navigationController?.popToRootViewController(animated: true)
-                        }
-                    
-                    }
-           }))
-       
-           alertController.addAction(UIAlertAction(title: "Cancel", style: .cancel))
-               self.present(alertController, animated: true, completion: nil)
-                       
-       }
-
+    
 
 }

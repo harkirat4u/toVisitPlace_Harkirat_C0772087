@@ -106,7 +106,7 @@ class FirstTableView: UITableViewController {
             defaults.set(true, forKey: "bool")
             defaults.set(indexPath.row, forKey: "edit")
             
-            let controller = self.storyboard?.instantiateViewController(withIdentifier: "location") as! TableMapView
+            let controller = self.storyboard?.instantiateViewController(withIdentifier: "map") as! TableMapView
 
             self.navigationController?.pushViewController(controller, animated: true)
             

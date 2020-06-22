@@ -10,13 +10,16 @@
         <!--Table Map View-->
         <scene sceneID="ZMf-Qb-1F9">
             <objects>
-                <viewController storyboardIdentifier="location" id="4IE-Qn-ZaK" customClass="TableMapView" customModule="toVisitPlace_Harkirat_C0772087" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="map" id="4IE-Qn-ZaK" customClass="TableMapView" customModule="toVisitPlace_Harkirat_C0772087" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="CdN-G1-izr">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" misplaced="YES" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="d5H-5p-fUV">
+                            <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" misplaced="YES" restorationIdentifier="map" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="d5H-5p-fUV">
                                 <rect key="frame" x="2" y="0.0" width="414" height="896"/>
+                                <connections>
+                                    <outlet property="delegate" destination="4IE-Qn-ZaK" id="zrh-nF-vjz"/>
+                                </connections>
                             </mapView>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
@@ -28,6 +31,9 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="Abm-gk-1H4"/>
                     </view>
+                    <connections>
+                        <outlet property="editMap" destination="d5H-5p-fUV" id="B9P-3W-9kt"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="sdn-la-BNp" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>

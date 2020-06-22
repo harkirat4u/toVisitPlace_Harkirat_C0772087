@@ -67,7 +67,7 @@ class ViewController: UIViewController,MKMapViewDelegate{
     @IBAction func PinDrop(_ sender: UITapGestureRecognizer) {
         let newCoordinates = mapView.convert(sender.location(in: mapView), toCoordinateFrom: mapView)
          annotation.coordinate = newCoordinates
-         annotation.title = "Pin Droped here"
+         annotation.title = "Add location to favorite place"
          mapView.addAnnotation(annotation)
          self.mapView.addAnnotation(annotation)
         print(newCoordinates)}
@@ -178,7 +178,7 @@ class ViewController: UIViewController,MKMapViewDelegate{
                 return nil
         }
             let pinAnnotation = mapView.dequeueReusableAnnotationView(withIdentifier: "droppablePin") ?? MKPinAnnotationView()
-            pinAnnotation.image = UIImage(named: "ic_place_2x")
+            pinAnnotation.image = UIImage(named: "ic_place_3x")
             pinAnnotation.canShowCallout = true
             pinAnnotation.rightCalloutAccessoryView = UIButton(type: .detailDisclosure)
             return pinAnnotation
