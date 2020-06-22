@@ -8,9 +8,8 @@
 
 import Foundation
 
-class Places{
-    
-    var placeLat: Double
+class mplaces{
+     var placeLat: Double
     var placeLong: Double
     var placeName :String
     var city :String
@@ -22,5 +21,6 @@ class Places{
         self.placeName = placeName
         self.city = city
         self.postalCode = postalCode
-        self.country = country}
+        self.country = country
+    }
 }

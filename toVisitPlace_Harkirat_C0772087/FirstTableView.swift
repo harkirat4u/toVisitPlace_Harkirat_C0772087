@@ -9,16 +9,16 @@
 import Foundation
 import UIKit
 
-class TableView: UITableViewController {
-    var places : [Places]?
+class FirstTableView: UITableViewController {
+    var places : [mplaces]?
         
-        var deleteArray : [Places]?
+        var deleteArray : [mplaces]?
         
         let defaults = UserDefaults.standard
         
         override func viewDidLoad() {
             super.viewDidLoad()
-              self.navigationController?.view.tintColor = .systemPink
+              
         }
         
         override func viewWillAppear(_ animated: Bool) {
@@ -34,7 +34,7 @@ class TableView: UITableViewController {
            }
         
         func loadData() {
-            places = [Places]()
+            places = [mplaces]()
             
             let filePath = getDataFilePath()
             
@@ -47,7 +47,7 @@ class TableView: UITableViewController {
                        
                         let placeContent = content.components(separatedBy: ",")
                         if placeContent.count == 6 {
-                            let place = Places(placeLat: Double(placeContent[0]) ?? 0.0, placeLong: Double(placeContent[1]) ?? 0.0, placeName: placeContent[2], city: placeContent[3], postalCode: placeContent[4], country: placeContent[5])
+                            let place = mplaces(placeLat: Double(placeContent[0]) ?? 0.0, placeLong: Double(placeContent[1]) ?? 0.0, placeName: placeContent[2], city: placeContent[3], postalCode: placeContent[4], country: placeContent[5])
                             places?.append(place)
                         }
                 }
@@ -72,21 +72,16 @@ class TableView: UITableViewController {
                 }
             }
         }
-
-        // MARK: - Table view data source
-        
-        override func tableView(_ tableView: UITableView, titleForHeaderInSection
+ override func tableView(_ tableView: UITableView, titleForHeaderInSection
                                     section: Int) -> String? {
            return "Your Favourite Places are:"
         }
 
         override func numberOfSections(in tableView: UITableView) -> Int {
-            // #warning Incomplete implementation, return the number of sections
-            return 1
+             return 1
         }
 
         override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-            // #warning Incomplete implementation, return the number of rows
             return places?.count ?? 0
         }
 
@@ -94,7 +89,7 @@ class TableView: UITableViewController {
         override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
             
             let place = self.places![indexPath.row]
-            let cell = tableView.dequeueReusableCell(withIdentifier: "placeCell")
+            let cell = tableView.dequeueReusableCell(withIdentifier: "firstcell")
             cell?.textLabel?.text = place.placeName + " , " + place.city
             cell?.detailTextLabel?.text = place.country + " , " + place.postalCode
             
@@ -117,15 +112,15 @@ class TableView: UITableViewController {
             
         }
 
-        override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
-        if editingStyle == .delete {
+        override func tableView(_ tableView: UITableView, commit Style: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+        if Style == .delete {
                 
                 self.places?.remove(at: indexPath.row)
                 self.tableView.deleteRows(at: [indexPath], with: .automatic)
                 
                 self.deleteArray = self.places
                 deleteRow()
-       } else if editingStyle == .insert {
+       } else if Style == .insert {
             }
         }
     }

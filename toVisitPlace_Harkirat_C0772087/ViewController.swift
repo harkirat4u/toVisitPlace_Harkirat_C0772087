@@ -14,20 +14,26 @@ class ViewController: UIViewController,MKMapViewDelegate{
 
     @IBOutlet var PinDrop: UITapGestureRecognizer!
     @IBOutlet weak var mapView: MKMapView!
-    let locationManager  = CLLocationManager()
+     var locationManager:CLLocationManager!
     let annotation = MKPointAnnotation()
     let destinationRequest = MKDirections.Request()
-     var places:[Places]?
+    var vcplace:[mplaces] = [mplaces]()
+     let defaults = UserDefaults.standard
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        setupLocationManager()
+        loadData()
         // Do any additional setup after loading the view.
     }
 
      func setupLocationManager(){
+        locationManager = CLLocationManager()
          locationManager.delegate = self
-         locationManager.desiredAccuracy = kCLLocationAccuracyBest}
-     
-     func checklocationServices(){
+         locationManager.desiredAccuracy = kCLLocationAccuracyBest
+            mapView.delegate = self}
+  
+    func checklocationServices(){
          if CLLocationManager.locationServicesEnabled(){
              setupLocationManager()
              checkAuthorization()}
@@ -64,18 +70,15 @@ class ViewController: UIViewController,MKMapViewDelegate{
          annotation.title = "Pin Droped here"
          mapView.addAnnotation(annotation)
          self.mapView.addAnnotation(annotation)
-        print(newCoordinates) //latitude value or longitude value
-        let locationData = ["lat": annotation.coordinate.latitude, "long": annotation.coordinate.longitude,"name":"locationName"] as [String : Any]
-        UserDefaults.standard.set(locationData, forKey: "pinned_annotation")
-        UserDefaults.standard.synchronize()
-    }
+        print(newCoordinates)}
+    
     func getDataFilePath() -> String {
         let documentPath = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)[0]
         let filePath = documentPath.appending("/places.txt")
         return filePath
     }
         func loadData() {
-            places = [Places]()
+             vcplace = [mplaces]()
            let filePath = getDataFilePath()
            if FileManager.default.fileExists(atPath: filePath){
                 do{
@@ -84,8 +87,8 @@ class ViewController: UIViewController,MKMapViewDelegate{
                     for content in contentArray{
                      let placeContent = content.components(separatedBy: ",")
                         if placeContent.count == 6 {
-                            let place = Places(placeLat: Double(placeContent[0]) ?? 0.0, placeLong: Double(placeContent[1]) ?? 0.0, placeName: placeContent[2], city: placeContent[3], postalCode: placeContent[4], country: placeContent[5])
-                            places?.append(place)
+                            let place = mplaces(placeLat: Double(placeContent[0]) ?? 0.0, placeLong: Double(placeContent[1]) ?? 0.0, placeName: placeContent[2], city: placeContent[3], postalCode: placeContent[4], country: placeContent[5])
+                            vcplace.append(place)
                         }
                     }
                 }
@@ -102,7 +105,7 @@ class ViewController: UIViewController,MKMapViewDelegate{
         let filePath = getDataFilePath()
 
         var saveString = ""
-        for place in places!{
+        for place in vcplace{
            saveString = "\(saveString)\(place.placeLat),\(place.placeLong),\(place.placeName),\(place.city),\(place.country),\(place.postalCode)\n"
             do{
            try saveString.write(toFile: filePath, atomically: true, encoding: .utf8)
@@ -112,7 +115,8 @@ class ViewController: UIViewController,MKMapViewDelegate{
             }
         }
     }
-      func geocode()  {
+      func mapcode()  {
+
         CLGeocoder().reverseGeocodeLocation(CLLocation(latitude: annotation.coordinate.latitude, longitude: annotation.coordinate.longitude)) {  placemark, error in
                if let error = error as? CLError {
                    print("CLError:", error)
@@ -144,10 +148,10 @@ class ViewController: UIViewController,MKMapViewDelegate{
                 if let cntry = placemark.country {
                                         country += cntry
                                     }
-                let place = Places(placeLat: self.annotation.coordinate.latitude, placeLong:self.annotation.coordinate.longitude, placeName: placeName, city: city, postalCode: postalCode, country: country)
-             self.places?.append(place)
+                let place = mplaces(placeLat: self.annotation.coordinate.latitude, placeLong:self.annotation.coordinate.longitude, placeName: placeName, city: city, postalCode: postalCode, country: country)
+                self.vcplace.append(place)
                 self.saveData()
-                self.navigationController?.popToRootViewController(animated: true)
+               
  
                 }
             
@@ -160,7 +164,7 @@ class ViewController: UIViewController,MKMapViewDelegate{
     let alertController = UIAlertController(title: "Favourites", message:
             "add marked Location to favourites?", preferredStyle: .actionSheet)
         alertController.addAction(UIAlertAction(title: "Yes", style:  .default, handler: { (UIAlertAction) in
-            self.geocode()
+            self.mapcode()
             
         }))
     

@@ -19,13 +19,12 @@ class TableMapView: UIViewController, MKMapViewDelegate {
     var long : Double = 0.0
     var drag : Bool? = false
     var editedPlace : Int = 0
-    var editPlaces : [Places]?
+    var editPlaces : [mplaces]?
     
     override func viewDidLoad() {
         super.viewDidLoad()
         editMap.delegate = self
-         self.navigationController?.view.tintColor = .systemPink
-//        self.navigationItem.leftBarButtonItem?.title = "Back"
+
         self.navigationItem.title = "Edit your location"
         
         let backButton = UIBarButtonItem()
@@ -39,18 +38,17 @@ class TableMapView: UIViewController, MKMapViewDelegate {
         let latDelta: CLLocationDegrees = 0.05
         let longDelta: CLLocationDegrees = 0.05
          
-         // 3 - Creating the span, location coordinate and region
+         
         let span = MKCoordinateSpan(latitudeDelta: latDelta, longitudeDelta: longDelta)
         let customLocation = CLLocationCoordinate2D(latitude: lat, longitude: long)
         let region = MKCoordinateRegion(center: customLocation, span: span)
                
-         // 4 - assign region to map
+         
         editMap.setRegion(region, animated: true)
         
         loadData()
     
     }
-    
    func dragablePin() -> MKPointAnnotation{
     self.lat = defaults.double(forKey: "latitude")
     self.long = defaults.double(forKey: "longitude")
@@ -60,7 +58,7 @@ class TableMapView: UIViewController, MKMapViewDelegate {
     print("Lat: \(lat): Long: \(long)")
     let annotation = MKPointAnnotation()
     annotation.coordinate = CLLocationCoordinate2D(latitude: self.lat, longitude: self.long)
-//    annotation.title = "Your Favourite Location"
+
     let geocoder = CLGeocoder()
     geocoder.reverseGeocodeLocation(CLLocation(latitude: lat, longitude: long)) { (placemarks, error) in
         if let places = placemarks {
@@ -78,18 +76,17 @@ class TableMapView: UIViewController, MKMapViewDelegate {
      
         func getDataFilePath() -> String {
                let documentPath = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)[0]
-               let filePath = documentPath.appending("/places.txt")
+               let filePath = documentPath.appending("/pinplaces.txt")
                return filePath
            }
         
         func loadData() {
-            self.editPlaces = [Places]()
+            self.editPlaces = [mplaces]()
             
             let filePath = getDataFilePath()
             
             if FileManager.default.fileExists(atPath: filePath){
                 do{
-                    //creating string of file path
                  let fileContent = try String(contentsOfFile: filePath)
                     
                     let contentArray = fileContent.components(separatedBy: "\n")
@@ -97,7 +94,7 @@ class TableMapView: UIViewController, MKMapViewDelegate {
                        
                         let placeContent = content.components(separatedBy: ",")
                         if placeContent.count == 6 {
-                            let place = Places(placeLat: Double(placeContent[0]) ?? 0.0, placeLong: Double(placeContent[1]) ?? 0.0, placeName: placeContent[2], city: placeContent[3], postalCode: placeContent[4], country: placeContent[5])
+                            let place = mplaces(placeLat: Double(placeContent[0]) ?? 0.0, placeLong: Double(placeContent[1]) ?? 0.0, placeName: placeContent[2], city: placeContent[3], postalCode: placeContent[4], country: placeContent[5])
                             self.editPlaces?.append(place)
                         }}
                 }
@@ -174,19 +171,16 @@ extension TableMapView{
                         if let cntry = placemark.country {
                                                 country += cntry
                                             }
-                        let place = Places(placeLat:  mapView.annotations[0].coordinate.latitude, placeLong: mapView.annotations[0].coordinate.longitude, placeName: placeName, city: city, postalCode: postalCode, country: country)
+                        let place = mplaces(placeLat:  mapView.annotations[0].coordinate.latitude, placeLong: mapView.annotations[0].coordinate.longitude, placeName: placeName, city: city, postalCode: postalCode, country: country)
                         self.editPlaces?.remove(at: self.editedPlace)
                         self.editPlaces?.append(place)
                         
                         self.editLocation()
 
                         self.navigationController?.popToRootViewController(animated: true)
-
-    
                         }
                     
                     }
-               
            }))
        
            alertController.addAction(UIAlertAction(title: "Cancel", style: .cancel))
